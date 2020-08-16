@@ -21,6 +21,7 @@ public class Program {
 		System.out.print("Check-Out date (dd/mm/yyyy): ");
 		Date checkOut = sdf.parse(sc.next());
 		
+		// Deveria ser feita pelo construtor, porém não tem como retornar String pelo construtor
 		if(!checkOut.after(checkIn)) {
 			System.out.print("Errorin reservation: Check-out date must beaftercheck-in date");
 		}
@@ -35,16 +36,13 @@ public class Program {
 			System.out.print("Check-Out date (dd/mm/yyyy): ");
 			checkOut = sdf.parse(sc.next());
 			
-			Date now = new Date();
-			
-			if(checkIn.before(now) || checkOut.before(now)) {
-				System.out.println("Error in reservation: Reservationdates for updatemust befuture dates");
-			}
-			else if(!checkOut.after(checkIn)) {
-				System.out.print("Errorin reservation: Check-out date must beaftercheck-in date");
+			String error = reservation.updateDates(checkIn, checkOut); 
+			if(error != null) {
+				
+				System.out.println("Error in reservation: " + error);
 			}
 			else {
-				reservation.updateDates(checkIn, checkOut);
+				
 				System.out.print("Reservation: " + reservation);
 			}
 			
